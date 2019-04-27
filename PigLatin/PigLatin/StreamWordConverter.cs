@@ -36,7 +36,7 @@
                         var converted = this.convertWord(builder.ToString());
                         await streamWriter.WriteAsync(converted.AsMemory(), cancellationToken);
                     }
-                    await stream.FlushAsync();
+                    await streamWriter.FlushAsync();
                     return;
                 }
                 char c = memory.ToArray()[0];
