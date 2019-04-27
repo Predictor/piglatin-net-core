@@ -42,29 +42,21 @@
 
         private static string Piggify(string word)
         {
-            try
+            var convertedWord = word;
+            if (convertedWord[0].IsVowel())
             {
-                var convertedWord = word;
-                if (convertedWord[0].IsVowel())
-                {
-                    // Words that start with a vowel have the letters “way” added to the end.
-                    convertedWord += UnmodifiableEnding;
-                }
-                else
-                {
-                    // Words that start with a consonant have their 
-                    // first letter moved to the end of the word and the
-                    // letters “ay” added to the end.
-                    var consonant = convertedWord[0];
-                    convertedWord = convertedWord.Remove(0, 1) + consonant + Ay;
-                }
-                return convertedWord;
+                // Words that start with a vowel have the letters “way” added to the end.
+                convertedWord += UnmodifiableEnding;
             }
-            catch (Exception e)
+            else
             {
-                Debugger.Break();
+                // Words that start with a consonant have their 
+                // first letter moved to the end of the word and the
+                // letters “ay” added to the end.
+                var consonant = convertedWord[0];
+                convertedWord = convertedWord.Remove(0, 1) + consonant + Ay;
             }
-            return null;
+            return convertedWord;
         }
     }
 }
