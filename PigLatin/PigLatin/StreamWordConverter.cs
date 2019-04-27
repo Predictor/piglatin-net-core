@@ -8,6 +8,7 @@
 
     public class StreamWordConverter : IDisposable
     {
+        private readonly Memory<char> memory = new Memory<char>(new char[1]);
         private readonly StreamReader streamReader;
         private readonly Func<string, string> convertWord;
         private readonly Func<char, bool> isWordSeparator;
@@ -26,7 +27,7 @@
             while (true)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                Memory<char> memory = new Memory<char>(new char[1]);
+                
                 var count = await this.streamReader.ReadAsync(memory, cancellationToken);
                 if (count == 0)
                 {
@@ -35,6 +36,7 @@
                         var converted = this.convertWord(builder.ToString());
                         await streamWriter.WriteAsync(converted.AsMemory(), cancellationToken);
                     }
+                    await stream.FlushAsync();
                     return;
                 }
                 char c = memory.ToArray()[0];
@@ -44,7 +46,7 @@
                     {
                         var converted = this.convertWord(builder.ToString());
                         await streamWriter.WriteAsync(converted.AsMemory(), cancellationToken);
-                        builder = new StringBuilder();
+                        builder.Clear();
                     }
                     await streamWriter.WriteAsync(memory, cancellationToken);
                 }
