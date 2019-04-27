@@ -16,4 +16,10 @@
     <ProjectReference Include="..\PigLatin\PigLatin.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\gpl.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
