@@ -26,11 +26,13 @@ namespace PigLatinTests
         }
 
         [TestMethod]
-        public async Task StreamWordConverter_WithDegenerateConverter()
+        [DataRow("gpl.txt")]
+        [DataRow("crazy-unicode.txt")]
+        public async Task StreamWordConverter_WithDegenerateConverter(string fileName)
         {
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\gpl.txt");
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Resources\\{fileName}");
             string text = File.ReadAllText(path);
-            var converter = new StreamWordConverter(new MemoryStream(Encoding.UTF8.GetBytes(text)), s => s, CharExtensions.IsWordSeparator);
+            var converter = new StreamWordConverter(new MemoryStream(Encoding.UTF8.GetBytes(text)), s => s, CharExtensions.IsWordSeparator, CharExtensions.IsNotLatinLetter);
             var convertedStream = new MemoryStream();
             await converter.ConvertTo(convertedStream, CancellationToken.None);
             convertedStream.Position = 0;

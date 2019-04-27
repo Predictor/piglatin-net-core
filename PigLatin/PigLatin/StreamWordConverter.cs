@@ -12,12 +12,14 @@
         private readonly StreamReader streamReader;
         private readonly Func<string, string> convertWord;
         private readonly Func<char, bool> isWordSeparator;
+        private readonly Func<char, bool> isIgnoredOutsideWord;
 
-        public StreamWordConverter(Stream stream, Func<string, string> convertWord, Func<char, bool> isWordSeparator)
+        public StreamWordConverter(Stream stream, Func<string, string> convertWord, Func<char, bool> isWordSeparator, Func<char,bool> isIgnoredOutsideWord)
         {
             this.streamReader = new StreamReader(stream);
             this.convertWord = convertWord;
             this.isWordSeparator = isWordSeparator;
+            this.isIgnoredOutsideWord = isIgnoredOutsideWord;
         }
 
         public async Task ConvertTo(Stream stream, CancellationToken cancellationToken)
@@ -52,7 +54,14 @@
                 }
                 else
                 {
-                    builder.Append(c);
+                    if (builder.Length == 0 && isIgnoredOutsideWord(c))
+                    {
+                        await streamWriter.WriteAsync(memory, cancellationToken);
+                    }
+                    else
+                    {
+                        builder.Append(c);
+                    }
                 }
             }
         }
