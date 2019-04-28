@@ -1,4 +1,4 @@
-# Pig Latin Text Converter
+﻿# Pig Latin Text Converter
 ## Pig Latin definition
 - Words that start with a consonant have their first letter moved to the end of the word and the letters “ay” added to the end.
   - Hello becomes Ellohay
@@ -30,7 +30,9 @@ _**dotnet** PigLatin.CLI.dll --input <english.txt> --output <piglatin.txt>_
 - __PigLatin__ - contains classes for Pig Latin conversion of words and classes to apply conversion to a Stream
 - __PigLatin.CLI__ - command line interface (see above)
 - __PigLatinTests__ - unit tests for PigLatin library
+- __PigLatin.CLI__ - command line interface (see above)
+- __PigLatin.Service__ - simple ASP.NET Core service to provide an HTTP API for PigLatin
 
 ## Main classes
 - [__PigLatinWordConverter__](https://github.com/Predictor/piglatin-net-core/blob/master/PigLatin/PigLatin/PigLatinWordConverter.cs) – converts a word to Pig Latin
-- [__StreamWordConverter__](https://github.com/Predictor/piglatin-net-core/blob/master/PigLatin/PigLatin/StreamWordConverter.cs) – applies a given string transformation to a stream. _isWordSeparator_ ctor parameter defindes possible word separators (spaces, line breaks, dashes). _isIgnoredOutsideWord_ defines a set of symbols are not converted when not inside the word (quotation marks, brakets, etc)
+- [__StreamWordConverter__](https://github.com/Predictor/piglatin-net-core/blob/master/PigLatin/PigLatin/StreamWordConverter.cs) – applies a given string transformation to a stream. _isWordSeparator_ ctor parameter defines possible word separators (spaces, line breaks, dashes). _isIgnoredOutsideWord_ defines a set of symbols are not converted when not inside the word (quotation marks, brackets, etc.)
